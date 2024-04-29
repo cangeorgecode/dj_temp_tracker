@@ -1,0 +1,39 @@
+{% extends 'temp/base.html' %}
+{% block content %}
+<div class="container pt-4 pb-4">
+    <canvas id="myChart" width="50" height="50"></canvas>
+</div>
+  
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('myChart');
+  
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [{% for t in temperature %}'{{ t.date_recorded }}',{% endfor %}],
+        datasets: [{
+          label: 'Temperature',
+          data: [{% for t in temperature %}'{{ t.temperature }}',{% endfor %}],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            suggestedMin: 36,
+            ticks: {
+                stepSize: 0.05,
+            },
+          }
+        },
+        plugins: {
+            decimation: {
+                enabled: true,
+                algorithm: 'lttb',
+            }
+        }
+      }
+    });
+  </script>
+{% endblock content %}

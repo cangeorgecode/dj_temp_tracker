@@ -1,0 +1,36 @@
+{% extends 'temp/base.html' %}
+{% block content %}
+<div class="container text-center pt-5 ">
+    <table class="table ">
+        <thead>
+          <tr>
+            <th scope="col">Date created</th>
+            <th scope="col">Temperature</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+        {% for t in temperature %}
+            <tr>
+            <th scope="row" >{{ t.date_recorded }}</th>
+            <th scope="row" >{{ t.temperature }}°C</th>
+
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    </div>
+
+<div class="container pt-4 text-center">
+    <h4>Add your temperature for the day</h4>
+    <div class="d-flex justify-content-center">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Record</button>
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock content %}
