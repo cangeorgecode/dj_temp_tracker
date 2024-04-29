@@ -5,14 +5,28 @@
         <thead>
           <tr>
             <th scope="col">Date created</th>
+            <th scope="col">Smiley Face?</th>
             <th scope="col">Temperature</th>
+            <th scope="col">Remarks</th>
           </tr>
         </thead>
         <tbody class="table-group-divider">
         {% for t in temperature %}
             <tr>
             <th scope="row" >{{ t.date_recorded }}</th>
+            {% if t.smiley %}
+                <th scope="row" >☺️</th>
+            {% else %}
+            <th scope="row" ></th>
+            {% endif %}
+
             <th scope="row" >{{ t.temperature }}°C</th>
+
+            {% if t.remarks %}
+                <th scope="row" >{{ t.remarks }}</th>
+            {% else %}
+                <th scope="row" ></th>
+            {% endif %}
 
             </tr>
         {% endfor %}
@@ -25,7 +39,16 @@
     <div class="d-flex justify-content-center">
         <form action="" method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
+                <div class="mb-3">
+                  <input type="text" class="form-control" name="temperature" placeholder="Temperature">
+                </div>
+                <div class="mb-3">
+                  <input type="text" class="form-control" name="remarks" placeholder="Remarks">
+                </div>
+                <div class="mb-3 form-check">
+                  <input type="checkbox" class="form-check-input" name="smiley">
+                  <label class="form-check-label" for="exampleCheck1">Smiley face?</label>
+                </div>
             <button type="submit" class="btn btn-primary">Record</button>
         </form>
 

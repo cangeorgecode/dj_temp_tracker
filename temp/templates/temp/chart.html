@@ -1,5 +1,8 @@
 {% extends 'temp/base.html' %}
 {% block content %}
+{% for t in temperature %}
+    {{ t.date_recorded }}
+{% endfor %}
 <div class="container pt-4 pb-4">
     <canvas id="myChart" width="50" height="50"></canvas>
 </div>
@@ -11,10 +14,14 @@
     new Chart(ctx, {
       type: 'line',
       data: {
-        labels: [{% for t in temperature %}'{{ t.date_recorded }}',{% endfor %}],
+        labels: [
+            {% for t in temperature_record %}
+                '{{ t.date_recorded }}',
+            {% endfor %}
+        ],
         datasets: [{
           label: 'Temperature',
-          data: [{% for t in temperature %}'{{ t.temperature }}',{% endfor %}],
+          data: [{% for t in temperature_record %}'{{ t.temperature }}',{% endfor %}],
           borderWidth: 1
         }]
       },
@@ -25,6 +32,9 @@
             ticks: {
                 stepSize: 0.05,
             },
+          },
+          x: {
+            max: 62,
           }
         },
         plugins: {
